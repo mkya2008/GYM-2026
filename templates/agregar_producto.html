@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Producto{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-10 col-md-8 col-lg-6">
+                <div class="auth-card">
+                    <h3 class="text-center"><i class="fas fa-plus-circle"></i> Agregar Producto</h3>
+                    
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea name="descripcion" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label">Precio</label>
+                                <input type="number" name="precio" class="form-control" step="0.01" required>
+                                <small class="text-danger">⚠️ No puede ser 0</small>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Stock</label>
+                                <input type="number" name="stock" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label class="form-label">Categoría</label>
+                            <input type="text" name="categoria" class="form-control" placeholder="Ej: Ropa, Suplementos...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Imagen (nombre del archivo)</label>
+                            <input type="text" name="imagen" class="form-control" placeholder="producto.jpg">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="fas fa-save"></i> Guardar Producto
+                        </button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('admin_dashboard') }}">← Volver al Panel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

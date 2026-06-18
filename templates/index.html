@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - IRON BEAST{% endblock %}
+
+{% block content %}
+<!-- ============ HERO ============ -->
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content text-center">
+        <h1 class="hero-title">IRON BEAST</h1>
+        <h2 class="hero-subtitle">FITNESS & GYMWEAR</h2>
+        <p class="hero-slogan d-none d-sm-block">"Viste, alimenta y supera tus límites."</p>
+        <p class="hero-slogan d-block d-sm-none">"Supera tus límites"</p>
+    </div>
+</section>
+
+<!-- ============ CATÁLOGO ============ -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">CATÁLOGO DE PRODUCTOS</h2>
+        
+        {% if productos %}
+            <div class="row g-2 g-sm-3 g-md-4">
+                {% for producto in productos %}
+                <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-image">
+                            {% if producto.imagen %}
+                                <img src="{{ url_for('static', filename='uploads/' + producto.imagen) }}" alt="{{ producto.nombre }}" loading="lazy">
+                            {% else %}
+                                <img src="https://via.placeholder.com/300x300?text=IRON+BEAST" alt="{{ producto.nombre }}" loading="lazy">
+                            {% endif %}
+                        </div>
+                        <div class="product-body">
+                            <h5 class="product-name">{{ producto.nombre }}</h5>
+                            <p class="product-desc d-none d-sm-block">{{ producto.descripcion[:40] }}...</p>
+                            <div class="product-price">${{ "%.2f"|format(producto.precio) }}</div>
+                            <div class="product-stock">Stock: {{ producto.stock }}</div>
+                            <button class="btn btn-primary btn-sm w-100 mt-2">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted">No hay productos disponibles.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

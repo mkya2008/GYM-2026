@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IRON BEAST - {% block title %}Tienda Fitness{% endblock %}</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <span class="brand-text">IRON <span>BEAST</span></span>
+                <small class="brand-sub d-none d-sm-block">FITNESS & GYMWEAR</small>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">INICIO</a></li>
+                    
+                    {% if session.admin %}
+                        <li class="nav-item"><a class="nav-link text-warning" href="{{ url_for('admin_dashboard') }}"><i class="fas fa-crown"></i> <span class="d-none d-lg-inline">ADMIN</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('agregar_producto') }}"><i class="fas fa-plus-circle"></i> <span class="d-none d-lg-inline">Agregar</span></a></li>
+                        <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('admin_logout') }}"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-lg-inline">Salir</span></a></li>
+                    {% elif session.usuario %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('mi_carrito') }}"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">Carrito</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i> <span class="d-none d-lg-inline">{{ session.usuario.nombre }}</span></a></li>
+                        <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-lg-inline">Salir</span></a></li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                <i class="fas fa-sign-in-alt"></i> <span class="d-none d-lg-inline">INICIAR SESIÓN</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url_for('login') }}"><i class="fas fa-user"></i> Cliente</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('admin_login') }}"><i class="fas fa-user-cog"></i> Admin</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ MENSAJES ============ -->
+    <div class="container mt-5 pt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- ============ CONTENIDO ============ -->
+    {% block content %}{% endblock %}
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-md-4 text-center text-md-start">
+                    <h5>IRON BEAST</h5>
+                    <p class="footer-text">Viste, alimenta y supera tus límites.</p>
+                </div>
+                <div class="col-6 col-md-4 text-center text-md-start">
+                    <h6>Enlaces</h6>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                        <li><a href="#">Productos</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-4 text-center text-md-start">
+                    <h6>Contacto</h6>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> info@ironbeast.com</li>
+                        <li><i class="fas fa-phone"></i> +123 456 7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p>&copy; 2024 IRON BEAST. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

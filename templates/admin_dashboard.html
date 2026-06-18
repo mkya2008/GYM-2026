@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Panel Admin{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="container">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mb-4 gap-2">
+            <h1 class="section-title mb-0">PANEL ADMIN</h1>
+            <a href="{{ url_for('agregar_producto') }}" class="btn btn-success w-100 w-sm-auto">
+                <i class="fas fa-plus-circle"></i> Agregar Producto
+            </a>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th class="d-none d-sm-table-cell">Producto</th>
+                        <th class="d-sm-none">Producto</th>
+                        <th>Precio</th>
+                        <th class="d-none d-md-table-cell">Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.id }}</td>
+                        <td>
+                            <span class="d-none d-sm-inline">{{ producto.nombre[:30] }}</span>
+                            <span class="d-sm-none">{{ producto.nombre[:15] }}...</span>
+                        </td>
+                        <td>${{ "%.2f"|format(producto.precio) }}</td>
+                        <td class="d-none d-md-table-cell">{{ producto.stock }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{{ url_for('editar_producto', id=producto.id) }}" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ url_for('eliminar_producto', id=producto.id) }}" class="btn btn-danger" onclick="return confirm('¿Eliminar este producto?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
