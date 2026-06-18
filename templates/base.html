@@ -33,7 +33,13 @@
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('agregar_producto') }}"><i class="fas fa-plus-circle"></i> <span class="d-none d-lg-inline">Agregar</span></a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('admin_logout') }}"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-lg-inline">Salir</span></a></li>
                     {% elif session.usuario %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('mi_carrito') }}"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">Carrito</span></a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('mi_carrito') }}">
+                                <i class="fas fa-shopping-cart"></i> 
+                                <span class="d-none d-lg-inline">Carrito</span>
+                                <span class="badge bg-danger" id="cart-count">0</span>
+                            </a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i> <span class="d-none d-lg-inline">{{ session.usuario.nombre }}</span></a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-lg-inline">Salir</span></a></li>
                     {% else %}
@@ -98,6 +104,9 @@
         </div>
     </footer>
 
+    <!-- ============ SCRIPTS ============ -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript del carrito de compras -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

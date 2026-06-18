@@ -36,7 +36,11 @@
                             <p class="product-desc d-none d-sm-block">{{ producto.descripcion[:40] }}...</p>
                             <div class="product-price">${{ "%.2f"|format(producto.precio) }}</div>
                             <div class="product-stock">Stock: {{ producto.stock }}</div>
-                            <button class="btn btn-primary btn-sm w-100 mt-2">
+                            <button class="btn btn-primary btn-sm w-100 mt-2 btn-add-cart"
+                                    data-id="{{ producto.id }}"
+                                    data-name="{{ producto.nombre }}"
+                                    data-price="{{ producto.precio }}"
+                                    data-stock="{{ producto.stock }}">
                                 <i class="fas fa-cart-plus"></i> Agregar
                             </button>
                         </div>
