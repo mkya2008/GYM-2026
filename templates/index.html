@@ -3,7 +3,7 @@
 {% block title %}Inicio - IRON BEAST{% endblock %}
 
 {% block content %}
-<!-- ============ HERO ============ -->
+<!-- HERO -->
 <section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="container hero-content text-center">
@@ -14,7 +14,7 @@
     </div>
 </section>
 
-<!-- ============ CATÁLOGO ============ -->
+<!-- CATÁLOGO -->
 <section class="section">
     <div class="container">
         <h2 class="section-title">CATÁLOGO DE PRODUCTOS</h2>
@@ -26,9 +26,16 @@
                     <div class="product-card">
                         <div class="product-image">
                             {% if producto.imagen %}
-                                <img src="{{ url_for('static', filename='uploads/' + producto.imagen) }}" alt="{{ producto.nombre }}" loading="lazy">
+                                {% if producto.imagen.startswith('http') %}
+                                    <!-- Imagen externa (URL) -->
+                                    <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" loading="lazy">
+                                {% else %}
+                                    <!-- Imagen local -->
+                                    <img src="{{ url_for('static', filename='uploads/' + producto.imagen) }}" alt="{{ producto.nombre }}" loading="lazy">
+                                {% endif %}
                             {% else %}
-                                <img src="https://via.placeholder.com/300x300?text=IRON+BEAST" alt="{{ producto.nombre }}" loading="lazy">
+                                <!-- Imagen por defecto -->
+                                <img src="https://via.placeholder.com/300/300?text=IRON+BEAST" alt="{{ producto.nombre }}" loading="lazy">
                             {% endif %}
                         </div>
                         <div class="product-body">
